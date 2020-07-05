@@ -34,11 +34,13 @@ def signup():
 def verse():
     chapter_number = request.form.get('chapter_number')
     verse_number = request.form.get('verse_number')
+    if verse_number is None:
+        verse_number = 1
     headers = {'id': request.form.get('id')}
     response = requests_.get(url=gita_io+'chapter/{}/verse/{}/'.format(chapter_number, verse_number), headers=headers)
     response_body = json.loads(response.text)
     if response.status_code == 200:
-        return render_template('index.html', verse=json.loads(response.text))
+        return render_template('index.html', id=headers['id'] verse=json.loads(response.text))
     flash(response_body['error_message'])
     return render_template('index.html', id=headers['id'], verse=None)
 

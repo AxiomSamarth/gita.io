@@ -63,8 +63,8 @@
             <div class="container-fluid">
                 <div class="row" id="navbar">
                     <div class="col-md-12">
-                        <a href="/">More<span class="glyphicon glyphicon-off"></span></a>
-                        <a href="/logout/" style="float: right;">Logout</a>
+                        <a href="/" class="btn btn-link" style="float: left;">More<span class="glyphicon glyphicon-off"></span></a>
+                        <a class="btn btn-link" style="float: right;" href="/logout/">Logout</a>
                     </div>
                 </div>
                 <div class="row">
@@ -91,7 +91,7 @@
                         {% if not verse %}
                             <form action="/verse/" method="POST">
                                 <div class="row">
-                                    <div class="offset-md-3 col-md-3">
+                                    <div class="offset-md-5 col-md-3">
                                         <div class="form-group">
                                             <input type="hidden" name="id" value="{{ id }}" />
                                             <label>Chapter</label>
@@ -117,11 +117,9 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Verse</label>
-                                            <input type="text" name="verse_number" class="form-control" placeholder="19" required/>
-                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-6">
                                         <div class="form-group">
                                             <input class="btn btn-primary" type="submit" value="Submit" />
                                         </div>
@@ -146,6 +144,24 @@
                                         <q style="font-family: Palanquin;font-style: italic; font-size: 1.2em;">{{ verse['verse_meaning'] }}</q>
                                     </div>
                                     <center><audio style="display: block;" src="http://localhost:8080/static/{{ verse['chapter'] }}.{{ verse['verse_number'] }}.mp3" controls /></center>
+                                </div>
+                            </div>
+                            <div class="row" style="margin: 1em 1em">
+                                <div class="offset-lg-7 col-lg-1 col-md-1 offset-md-5 text-center">
+                                    <form action="/verse/" method="POST">
+                                        <input type="hidden" name="id" value="{{ id }}" />
+                                        <input name="chapter_number" value="{{ verse['chapter'] }}" type="hidden" />
+                                        <input name="verse_number" value="{{ verse['verse_number']+1 }}" type="hidden" />
+                                        <input class="btn btn-primary" type="submit" value="Next Verse" />
+                                    </form>
+                                </div>
+                                <div class="col-lg-1 col-md-1 text-center">
+                                    <form action="/verse/" method="POST">
+                                        <input type="hidden" name="id" value="{{ id }}" />
+                                        <input name="chapter_number" value="{{ verse['chapter'] + 1 }}" type="hidden" />
+                                        <input name="verse_number" value="1" type="hidden" />
+                                        <input class="btn btn-primary" type="submit" value="Next Chapter" />
+                                    </form>
                                 </div>
                             </div>
                         {% endif %}
